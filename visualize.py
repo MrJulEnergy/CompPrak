@@ -2,24 +2,31 @@ import pygame
 import numpy as np
 
 class Visualize:
-    def __init__(self, trajectory: np.array, circle_radius=10, fps=60):
+    def __init__(self, trajectory: np.array, bounds: np.array, particle_radius=10, fps=60):
         self.trajectory = trajectory  #trajectory[i, j, k]; i=particle, j=x/y, k=timestep
         self.fps = fps
+        self.bounds = bounds
+        self.window_size = (700, 500) 
+        self.window_title = "Population Simulation"
+     
+        self.background_color = (32, 32, 32)
 
-        #TODO Adjust trajectory to windowsize (extent)
-        #TODO periodic boundary conds.
+        self.particle_color = (150, 150, 150)
+        self.particle_radius = particle_radius
+        
+        self.aspect_ratio = self.window_size[0]/self.window_size[1]
 
         self.n_particles = self.trajectory.shape[0]
         self.n_timesteps = self.trajectory.shape[2]
 
-        self.background_color = (32, 32, 32)
-        self.circle_color = (150, 150, 150)
-        self.circle_radius = circle_radius
-        self.window_size = (700, 400)
-        self.window_title = "Population Simulation"
-
         self.setup_window()
         self.run()
+
+    def transform_coords(self, point: tuple):
+        x = (point[0] - self.bounds[0]) / (self.bounds[1] - self.bounds[0]) * self.window_size[0]
+        y = (point[1] - self.bounds[2]) / (self.bounds[3] - self.bounds[2]) * self.window_size[1]
+        return x, self.window_size[1]-y
+
 
     def setup_window(self):
         self.running = True
@@ -28,6 +35,7 @@ class Visualize:
 
         self.screen = pygame.display.set_mode(self.window_size)
         pygame.display.set_caption(self.window_title)
+        
         self.screen.fill(self.background_color)
         pygame.display.update()
     
@@ -53,10 +61,15 @@ class Visualize:
             self.running = False
             return
         for particle in range(self.n_particles):
-            pygame.draw.circle(self.screen, self.circle_color, self.trajectory[particle, :, time], self.circle_radius)
+            pos = self.transform_coords(self.trajectory[particle, :, time])
+            pygame.draw.circle(self.screen, self.particle_color, pos, self.particle_radius)
 
 if __name__ == "__main__":
-    traj = np.random.random(size=(10, 2, 500))
-    traj[:, 0, :] = 700*traj[:, 0, :]
-    traj[:, 1, :] = 400*traj[:, 1, :]
-    vis = Visualize(traj, fps=100)
+    x = np.linspace(0, 2*np.pi, 250)
+    y1 = np.sin(x)
+    y2 = np.cos(x)
+
+    traj = np.array([[x, y1], [x, y2]])
+    bounds = np.array([-0.5, 2*np.pi+0.5, -1.5, 1.5])
+    
+    vis = Visualize(traj, fps=100, bounds=bounds)
