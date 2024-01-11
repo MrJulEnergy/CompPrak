@@ -13,11 +13,15 @@ class Simulation:
         w = np.random.uniform(-1,1,(Variables.N, 2)) * sig *np.sqrt(2) # sqrt(2) weil 2d 
         return w
 
+    def leader_force(self, x):
+        #TODO
+        return np.zeros_like(x)
+    
     def step_vv_langevin(self, x , v , f):
         x += v * Variables.dt * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 * f * Variables.dt * Variables.dt / Variables.mass
         v = (v * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 / Variables.mass * f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
 
-        f = np.zeros_like(x) + self.W() # anstatt np.zeros_like(x) kommt hier die anziehung des leaders hin
+        f = self.leader_force(x) + self.W() # anstatt np.zeros_like(x) kommt hier die anziehung des leaders hin
         v = v + (0.5 / Variables.mass * f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
         return x , v , f
 
