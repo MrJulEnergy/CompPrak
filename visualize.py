@@ -7,7 +7,7 @@ class Visualize:
         self.trajectory = trajectory  #trajectory[i, j, k]; i=particle, j=x/y, k=timestep
         self.fps = fps
         self.bounds = bounds
-        self.window_size = (800, 300) 
+        self.window_size = (500, 500) 
 
         self.window_title = "Population Simulation"
      
@@ -29,20 +29,26 @@ class Visualize:
         self.setup_window()
         self.run()
 
-        
+    def transform_coords(self, point):
+        x, y = point
 
-    
-    def transform_coords(self, point: np.array):
-        rel_point = (point - self.bounds_center) * np.array([1, -1]) + np.array([self.bounds_width/2, self.bounds_height/2])
+        norm_x = (x - self.bounds[0]) / (self.bounds[1] - self.bounds[0])
+        norm_y = (y - self.bounds[2]) / (self.bounds[3] - self.bounds[2])
         
-        
-        if self.min_idx == 0:
-            rel_point *= np.array([self.window_size[0]/self.bounds_width, self.window_size[0]/self.bounds_height*self.window_aspect])
+        # Adjust for aspect ratio difference
+        if self.bounds_aspect > self.window_aspect:
+            # Simulation is wider than the screen
+            scaled_x = norm_x * self.window_size[0]
+            scaled_y = norm_y * self.window_size[0]
+
         else:
-            rel_point *= np.array([self.window_size[1]/self.bounds_width*self.window_aspect, self.window_size[1]/self.bounds_height])
-            print(rel_point)
+            # Simulation is taller than the screen
+            scaled_x = norm_x * self.window_size[1]
+            scaled_y = norm_y * self.window_size[1]
+        
+        return scaled_x, self.window_size[1]-scaled_y
 
-        return rel_point
+
 
     def setup_window(self):
         self.running = True
@@ -82,11 +88,6 @@ class Visualize:
 
 
 if __name__ == "__main__":
-    #x = np.linspace(0, 2*np.pi, 550)
-    #y = np.sin(x)
-    #traj = np.array([[x, y]])
-    #bounds = np.array([0, 2*np.pi, -1, 1])
-
     x = np.linspace(0, 1, 250)
     y = x
     traj = np.array([[x, y]])
