@@ -20,7 +20,7 @@ with open(Variables.dumpfile, 'rb') as fp:
     data = pickle.load(fp)
 
 
-#print(data[0, 0, :100])
+
 bounds_max = max([np.max(data[:, 0, :]), np.max(data[:, 1, :]), np.abs(np.min(data[:, 0, :])), np.abs(np.min(data[:, 1, :]))])
 bounds = [-bounds_max, bounds_max, -bounds_max, bounds_max]
 vis = Visualize(data, bounds)

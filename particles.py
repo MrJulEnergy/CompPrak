@@ -29,7 +29,6 @@ class Simulation:
         f = np.zeros_like(x)
         while t < Variables.T:
             x, v, f = self.step_vv_langevin(x, v, f)
-            print(x.shape)
             traj.append(x.copy())
             t += Variables.dt
         
