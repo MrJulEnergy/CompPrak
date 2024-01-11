@@ -16,7 +16,7 @@ class Variables:
     N = 100 # anzahl der Partikel
     mass = 1 # ist eigentlich egal hier
     k_B = 1 # ist auch eigentlich egal hier
-    gamma = 1 # sowas wie die Diffusionskonstane
+    gamma = 1 # reibungsfaktor für die bewegung
     Temp = 1 # wie sehr zapplen die leute im raum
 
     # Simulation
