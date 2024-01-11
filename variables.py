@@ -6,7 +6,7 @@ class Variables:
     # Animation
     fps = 60 # Bilder pro Sekunde in der Animation
     T = 10 # Zeit der Animation
-    dt = 1/fps
+    dt = 1/fps # time step 
 
     window_size = (500, 500)
     window_title = "Particle Simulation"
@@ -14,7 +14,7 @@ class Variables:
 
     # Partikel
     N = 100 # anzahl der Partikel
-    mass = .1 # ist eigentlich egal hier
+    mass = 1 # ist eigentlich egal hier
     k_B = 1 # ist auch eigentlich egal hier
     gamma = 1 # reibungsfaktor für die bewegung
     Temp = 1 # wie sehr zapplen die leute im raum

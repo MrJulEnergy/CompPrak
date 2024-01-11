@@ -5,7 +5,7 @@ from particles import Simulation
 import pickle
 import numpy as np
 
-x = 20*np.random.random((Variables.N, 2))-10
+x = 10*np.random.random((Variables.N, 2))-5
 v = np.zeros((Variables.N, 2))
 
 sim = Simulation(x, v)
