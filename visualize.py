@@ -1,20 +1,20 @@
 import pygame
 import numpy as np
-import math
+from variables import Variables
 
 class Visualize:
-    def __init__(self, trajectory: np.array, bounds: np.array, particle_radius=10, fps=60):
+    def __init__(self, trajectory: np.array, bounds: np.array):
         self.trajectory = trajectory  #trajectory[i, j, k]; i=particle, j=x/y, k=timestep
-        self.fps = fps
+        self.fps = Variables.fps
         self.bounds = bounds
-        self.window_size = (500, 500) 
 
-        self.window_title = "Population Simulation"
+        self.window_size = Variables.window_size
+        self.window_title = Variables.window_title
      
         self.background_color = (32, 32, 32)
 
         self.particle_color = (150, 150, 150)
-        self.particle_radius = particle_radius
+        self.particle_radius = Variables.particle_radius
         
         self.n_particles = self.trajectory.shape[0]
         self.n_timesteps = self.trajectory.shape[2]
@@ -35,20 +35,15 @@ class Visualize:
         norm_x = (x - self.bounds[0]) / (self.bounds[1] - self.bounds[0])
         norm_y = (y - self.bounds[2]) / (self.bounds[3] - self.bounds[2])
         
-        # Adjust for aspect ratio difference
         if self.bounds_aspect > self.window_aspect:
-            # Simulation is wider than the screen
             scaled_x = norm_x * self.window_size[0]
             scaled_y = norm_y * self.window_size[0]
 
         else:
-            # Simulation is taller than the screen
             scaled_x = norm_x * self.window_size[1]
             scaled_y = norm_y * self.window_size[1]
         
         return scaled_x, self.window_size[1]-scaled_y
-
-
 
     def setup_window(self):
         self.running = True
@@ -92,4 +87,5 @@ if __name__ == "__main__":
     y = x
     traj = np.array([[x, y]])
     bounds = np.array([0, 1, 0, 1])
-    vis = Visualize(traj, fps=100, bounds=bounds)
+    print(traj.shape)
+    vis = Visualize(traj, bounds=bounds)
