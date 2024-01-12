@@ -6,6 +6,7 @@
     - LÖSUNG: Funktioniert doch, sah nur so aus bei variabler Boundary. Wenn die konstant für verschiedene Variablen getestet wird, sieht es wieder gut aus
 - [ ] Leader Force erstellen (kraft die richtung leader zeigt (z.b. LJ-Potential oder Coulomb-Kraft wären gute kandidaten dafür (letzteres ist besser, da langreichweitende kraft, aber dann dürfen keine periodic boundaries mehr verwendet werden)))
     - Verlet lists?
+        - sonst ist es wirklich sehr langsam. 
     - cell lists?
 - [ ] Trajektorie des leader vorgeben
 - [ ] Farben der parikel variable machen

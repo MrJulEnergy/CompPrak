@@ -14,8 +14,20 @@ class Simulation:
         return w
 
     def leader_force(self, x):
-        #TODO
-        return np.zeros_like(x)
+        #TODO Hier ist nur ein Lennard Jones Potential zur zeit
+        def _lj_force(r_ij):
+            r = np.linalg.norm(r_ij)
+            fac = 4.0 * (12.0 * np.power(r, -13.) - 6.0 * np.power(r, -7.))
+            return fac * r_ij / r
+        
+        f = np.zeros_like(x)
+        pairs = [(i, j) for i in range(Variables.N) for j in range(i+1, Variables.N)]
+        for pair in pairs:
+            r_ij_vec = x[pair[0], :] - x[pair[1], :]
+            f_ij = _lj_force(r_ij_vec)
+            f[pair[0]] += f_ij
+            f[pair[1]] -= f_ij # (Actio=reactio, was der leader aber warscheinlich nicht erfährt. vielleicht aber abgeschwächt) 
+        return f
     
     def step_vv_langevin(self, x , v , f):
         x += v * Variables.dt * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 * f * Variables.dt * Variables.dt / Variables.mass
@@ -33,6 +45,7 @@ class Simulation:
         f = np.zeros_like(x)
         while t < Variables.T:
             x, v, f = self.step_vv_langevin(x, v, f)
+            #TODO Periodic Bounday Conditions
             traj.append(x.copy())
             t += Variables.dt
         
