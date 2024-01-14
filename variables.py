@@ -20,7 +20,7 @@ class Variables:
 
     # lattice grid
     DENSITY = 0.3 # Anfangsdichte
-    N_PER_SIDE = 10
+    N_PER_SIDE = 3
     N = N_PER_SIDE**2
     VOLUME = N / DENSITY
     box = np.ones(2) * VOLUME**(1. / 2) # für periodic boundarys sollte das hier als box verwendet werden
