@@ -10,7 +10,7 @@ class Variables:
 
     window_size = (500, 500)
     window_title = "Particle Simulation"
-    particle_leader_radius = 10
+    particle_leader_radius = 7
     particle_follower_radius = 5
     particle_starting_color = (150, 150, 150)
 
@@ -22,15 +22,21 @@ class Variables:
 
     # lattice grid
     DENSITY = 0.3 # Anfangsdichte
-    N_PER_SIDE = 10
+    N_PER_SIDE = 5
     N = N_PER_SIDE**2
     VOLUME = N / DENSITY
     box = np.ones(2) * VOLUME**(1. / 2) # für periodic boundarys sollte das hier als box verwendet werden
 
     # Particles
-    N_leaders = 4
+    N_leaders = 1
+    loss_factor = 0.5
+    
+    # leader force
+    a = 1 # potentialtopf tiefe
+    b = 1 # potentialtopf position
+    leader_attraction = 5
 
     # Simulation
-    dumpfile = "checkpoints/dump.save"
+    dumpfile = "checkpoints/dump2.save"
 
 

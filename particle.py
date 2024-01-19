@@ -19,25 +19,30 @@ class Particle:
         self.radius = Variables.particle_leader_radius
         #TODO wähle farbe aus farben-set
 
-    def update_convinced(self, change: np.array):
-        self.convinced += change
-        np.where(self.convinced > 1, 1, self.convinced)  
-        self.update_color()
+    def update_convinced(self, r: float, i: int):
+        change_rate = (1/r - self.convinced[i] * Variables.loss_factor) 
+        self.convinced[i] += change_rate / Variables.fps
+        #TODO Test if 1/fps is the right choice so that this is unabhängig von fps 
+        self.convinced = np.where(self.convinced > 1, 1, self.convinced)  
+        print(self.convinced)
+        self.update_color(i)
     
-    def update_color():
+    def update_color(self, i):
         #TODO Verwende self.convinced zum anpassen der Farbe
+        new_color = round((255) * self.convinced[i] )
+        self.color = (new_color, 0, 0)
         pass
 
-    # def __setattr__(self, name, value):
-    #     # Setzte alle Kräfte, die auf den Leader wirken, auf Null.
-    #     if name == 'f':
-    #         if self.leader == True:
-    #             val = 0
-    #             super().__setattr__("f", val)
-    #         else:
-    #             super().__setattr__("f", value)
-    #     else:
-    #         super().__setattr__(name, value)
+    def __setattr__(self, name, value):
+        # Setzte alle Kräfte, die auf den Leader wirken, auf Null.
+        if name == 'f':
+            if self.leader == True:
+                val = 0
+                super().__setattr__("f", val)
+            else:
+                super().__setattr__("f", value)
+        else:
+            super().__setattr__(name, value)
 
 if __name__ == "__main__":
     p1 = Particle(0, 0, 1, Variables.particle_starting_color)
