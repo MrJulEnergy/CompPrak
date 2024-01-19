@@ -1,6 +1,6 @@
 # Todolist
 
-- [ ] Periodic Boundary Conditions (wenn das gewünscht ist. ich fände es sehr cool)
+- [x] Periodic Boundary Conditions (wenn das gewünscht ist. ich fände es sehr cool)
 - [ ] Aspect Ratio reparieren in der transform_coords method (absoluter krampf aber vielleicht können mathematiker da besser drüber nachdenken als ich.)
 - [x] Warum sieht es so aus als würden die variabelen Temp, mass und gamma keinen Einfluss auf die simulation haben?
     - LÖSUNG: Funktioniert doch, sah nur so aus bei variabler Boundary. Wenn die konstant für verschiedene Variablen getestet wird, sieht es wieder gut aus

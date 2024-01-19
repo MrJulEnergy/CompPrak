@@ -13,25 +13,28 @@ class Particle:
 
         self.color = color
 
-    def set_leader(self):
+    def set_leader(self, i):
+        #TODO bei mehr leadern überlegen
         self.leader = True
-        self.color = (255, 0, 0) # bei mehr leadern überlegen
+        if i == 0:
+            self.color = (255, 0, 0)
+        else:
+            self.color = (0, 0, 255)
         self.radius = Variables.particle_leader_radius
         #TODO wähle farbe aus farben-set
 
     def update_convinced(self, r: float, i: int):
         change_rate = (1/r - self.convinced[i] * Variables.loss_factor) 
         self.convinced[i] += change_rate / Variables.fps
+
         #TODO Test if 1/fps is the right choice so that this is unabhängig von fps 
         self.convinced = np.where(self.convinced > 1, 1, self.convinced)  
-        print(self.convinced)
         self.update_color(i)
     
     def update_color(self, i):
         #TODO Verwende self.convinced zum anpassen der Farbe
-        new_color = round((255) * self.convinced[i] )
-        self.color = (new_color, 0, 0)
-        pass
+        # Es kann sein, dass blau und rot vertauscht sind (follower und leader unterschiedlich), weil vielleicht leader zufällig falsch herum gezogen (zuerst hoch dann niedriger index)
+        self.color = np.array([round((255) * self.convinced[0]), 0, round((255) * self.convinced[1])])
 
     def __setattr__(self, name, value):
         # Setzte alle Kräfte, die auf den Leader wirken, auf Null.
@@ -43,15 +46,3 @@ class Particle:
                 super().__setattr__("f", value)
         else:
             super().__setattr__(name, value)
-
-if __name__ == "__main__":
-    p1 = Particle(0, 0, 1, Variables.particle_starting_color)
-    p2 = Particle(0, 0, 1, Variables.particle_starting_color)
-
-    p2.set_leader()
-    p1.f = 5
-    p2.f = 5
-
-    print(p1.f, p2.f)
-    print(p1.color, p2.color)
-    print(p1.radius, p2.radius)

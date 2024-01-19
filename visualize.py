@@ -11,7 +11,7 @@ class Visualize:
         self.window_size = Variables.window_size
         self.window_title = Variables.window_title
      
-        self.background_color = (32, 32, 32)
+        self.background_color = Variables.background_color
 
         self.particle_color = (150, 150, 150)
         

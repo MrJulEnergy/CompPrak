@@ -29,12 +29,12 @@ def choose_leader(particles: list[Particle]) -> None:
     particles : list[Particle]
     """
     leaders = np.random.choice(particles, size=Variables.N_leaders)
-    for particle in leaders:
-        particle.set_leader()
+    for i, particle in enumerate(leaders):
+        particle.set_leader(i)
 
 particles = lattice_grid()
 choose_leader(particles)
-
+print(Variables.box)
 sim = Simulation(particles)
 state = sim.run()
 

@@ -5,14 +5,15 @@ import numpy as np
 class Variables:
     # Animation
     fps = 60 # Bilder pro Sekunde in der Animation
-    T = 10 # Zeit der Animation
+    T = 20 # Zeit der Animation
     dt = 1/fps # time step 
 
     window_size = (500, 500)
+    background_color = (32, 32, 32)
     window_title = "Particle Simulation"
     particle_leader_radius = 7
     particle_follower_radius = 5
-    particle_starting_color = (150, 150, 150)
+    particle_starting_color = np.array([0, 0, 0])
 
     # Partikel
     mass = 1 # ist eigentlich egal hier
@@ -28,15 +29,14 @@ class Variables:
     box = np.ones(2) * VOLUME**(1. / 2) # für periodic boundarys sollte das hier als box verwendet werden
 
     # Particles
-    N_leaders = 1
-    loss_factor = 0.5
+    N_leaders = 2 # anzahl an leader (aktuell nur 2 möglich solange die farben manuell gewählt werden.)
+    loss_factor = 0.8 # verlust an convincedheit pro sekunde
     
     # leader force
-    a = 1 # potentialtopf tiefe
-    b = 1 # potentialtopf position
-    leader_attraction = 5
+    leader_attraction = 20 # potentialtopf tiefe (anziehungsstärke zwischen leader und follower)
+    leader_position = 2 # potentialtopf position (normaler abstand zwischen leader und follower)
 
     # Simulation
-    dumpfile = "checkpoints/dump2.save"
+    dumpfile = "checkpoints/dump.save"
 
 
