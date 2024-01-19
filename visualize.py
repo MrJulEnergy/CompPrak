@@ -3,8 +3,8 @@ import numpy as np
 from variables import Variables
 
 class Visualize:
-    def __init__(self, trajectory: np.array, bounds: np.array):
-        self.trajectory = trajectory  #trajectory[i, j, k]; i=particle, j=x/y, k=timestep
+    def __init__(self, particles: np.array, bounds: np.array):
+        self.particles = particles  #particles[i, j]; i=timestep, j=particle
         self.fps = Variables.fps
         self.bounds = bounds
 
@@ -14,10 +14,8 @@ class Visualize:
         self.background_color = (32, 32, 32)
 
         self.particle_color = (150, 150, 150)
-        self.particle_radius = Variables.particle_radius
         
-        self.n_particles = self.trajectory.shape[0]
-        self.n_timesteps = self.trajectory.shape[2]
+        self.n_timesteps = self.particles.shape[0]
 
         self.bounds_center = np.array([(self.bounds[1]+self.bounds[0])/2, (self.bounds[3]+self.bounds[2])/2])
         self.bounds_width = self.bounds[1]-self.bounds[0]
@@ -77,15 +75,8 @@ class Visualize:
         if time >= self.n_timesteps:
             self.running = False
             return
-        for particle in range(self.n_particles):
-            pos = self.transform_coords(self.trajectory[particle, :, time])
-            pygame.draw.circle(self.screen, self.particle_color, pos, self.particle_radius)
+        for particle in range(Variables.N):
+            pos = self.particles[time, particle].x
+            transformed_pos = self.transform_coords(pos)
+            pygame.draw.circle(self.screen, self.particles[time, particle].color, transformed_pos, self.particles[time, particle].radius)
 
-
-if __name__ == "__main__":
-    x = np.linspace(0, 1, 250)
-    y = x
-    traj = np.array([[x, y]])
-    bounds = np.array([0, 1, 0, 1])
-    print(traj.shape)
-    vis = Visualize(traj, bounds=bounds)
