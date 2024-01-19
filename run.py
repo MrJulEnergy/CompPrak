@@ -17,11 +17,23 @@ def lattice_grid() -> np.ndarray:
             v0 = np.zeros_like(x0)
             f0 = np.zeros_like(x0)
 
-            particles[i] = Particle(x0, v0, f0, Variables.particle_starting_color, Variables.mass)
+            particles[i] = Particle(x0, v0, f0, Variables.particle_starting_color)
             i+=1
     return particles
 
+def choose_leader(particles: list[Particle]) -> None:
+    """Choose a random leader from a set of particles
+
+    Parameters
+    ----------
+    particles : list[Particle]
+    """
+    leaders = np.random.choice(particles, size=Variables.N_leaders)
+    for particle in leaders:
+        particle.set_leader()
+
 particles = lattice_grid()
+choose_leader(particles)
 
 sim = Simulation(particles)
 state = sim.run()

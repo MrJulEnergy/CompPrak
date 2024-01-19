@@ -2,7 +2,7 @@ import numpy as np
 from variables import Variables
 
 class Particle:
-    def __init__(self, x0, v0, f0, color, mass):
+    def __init__(self, x0, v0, f0, color):
         self.leader: bool = False
         self.convinced: np.array = np.zeros(Variables.N_leaders)
         self.radius = Variables.particle_follower_radius
@@ -11,7 +11,6 @@ class Particle:
         self.v: np.array = v0
         self.f: np.array = f0
 
-        self.mass: float = mass
         self.color = color
 
     def set_leader(self):
@@ -41,11 +40,13 @@ class Particle:
     #         super().__setattr__(name, value)
 
 if __name__ == "__main__":
-    p1 = Particle(0, 0, 1, 0, 0)
-    p2 = Particle(0, 0, 1, 0, 0)
+    p1 = Particle(0, 0, 1, Variables.particle_starting_color)
+    p2 = Particle(0, 0, 1, Variables.particle_starting_color)
 
-    p2.leader = True
+    p2.set_leader()
     p1.f = 5
     p2.f = 5
 
     print(p1.f, p2.f)
+    print(p1.color, p2.color)
+    print(p1.radius, p2.radius)

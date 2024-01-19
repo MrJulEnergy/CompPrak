@@ -28,7 +28,7 @@ class Variables:
     box = np.ones(2) * VOLUME**(1. / 2) # für periodic boundarys sollte das hier als box verwendet werden
 
     # Particles
-    N_leaders = 1
+    N_leaders = 4
 
     # Simulation
     dumpfile = "checkpoints/dump.save"

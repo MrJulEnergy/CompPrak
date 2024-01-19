@@ -31,12 +31,12 @@ class Simulation:
         # Führe einen Velocity-Verlet Schritt für ein Langevin System aus
         for p in self.particles:
             # Update alle positionen und geschwindigkeiten aller(!!) Teilchen
-            p.x += p.v * Variables.dt * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 * p.f * Variables.dt * Variables.dt / p.mass
-            p.v = (p.v * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 / p.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
+            p.x += p.v * Variables.dt * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 * p.f * Variables.dt * Variables.dt / Variables.mass
+            p.v = (p.v * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 / Variables.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
         f = self.lj_force() + self.W() # anstatt np.zeros_like(x) kommt hier die anziehung des leaders hin
         for i, p in enumerate(self.particles):
             p.f = f[i, :]
-            p.v = p.v + (0.5 / p.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
+            p.v = p.v + (0.5 / Variables.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
         
 
     def run(self):
