@@ -19,19 +19,19 @@ class Variables:
     # Partikel
     mass = 1 # ist eigentlich egal hier
     k_B = 1 # ist auch eigentlich egal hier
-    gamma = 4 # reibungsfaktor für die bewegung
-    Temp = 1 # wie sehr zapplen die leute im raum
+    gamma = 5 # reibungsfaktor für die bewegung
+    Temp = 0.5 # wie sehr zapplen die leute im raum
 
     # lattice grid
-    DENSITY = 0.3 # Anfangsdichte
-    N_PER_SIDE = 5
+    DENSITY = 0.15 # Anfangsdichte
+    N_PER_SIDE = 6
     N = N_PER_SIDE**2
     VOLUME = N / DENSITY
     box = np.ones(2) * VOLUME**(1. / 2) # für periodic boundarys sollte das hier als box verwendet werden
 
     # Particles
     N_leaders = 2 # anzahl an leader (aktuell nur 2 möglich solange die farben manuell gewählt werden.)
-    loss_factor = 1 # verlust an convincedheit pro sekunde
+    loss_factor = 0.5 # verlust an convincedheit pro sekunde
     
     # leader force
     leader_attraction = 40 # potentialtopf tiefe (anziehungsstärke zwischen leader und follower)

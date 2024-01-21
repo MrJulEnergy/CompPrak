@@ -14,6 +14,7 @@ class Simulation:
         # Calculate the LJ-Force acting on the particles
         r_ij = self.minimum_image_vector(r_ij)
         r = np.linalg.norm(r_ij)    
+        r = self.check_zero(r)
         fac = 4.0 * a * (-12.0 * np.power(b/r, 13.) + 6.0 * np.power(b/r, 7.))
         f_ij = fac * r_ij / r
         return f_ij
@@ -38,7 +39,7 @@ class Simulation:
                     f_ij = self.lennard_jones_pair_force(r_ij, a, b)
                     
                     r = np.linalg.norm(r_ij)
-                    #r = self.check_zero(r)
+                    r = self.check_zero(r)
                     p.update_convinced(r, j)
 
                     f[i, :] += f_ij
@@ -97,9 +98,10 @@ class Simulation:
                 x[i] = x[i]+Variables.box[i]
         return x
     
-    def check_zero(r: float):
-        if 0 <= r and r <=0.01:
-            r = 0.02
+    def check_zero(self, r: float):
+        if 0 <= r and r <=0.08:
+            r = 0.08
+            print("[WARNUNG] check_zero: System ist instabil")
             return r
         else:
             return r

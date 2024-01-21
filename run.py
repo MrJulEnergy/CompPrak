@@ -33,12 +33,17 @@ def choose_leader(particles: list[Particle], leader_paths) -> None:
     for i, particle in enumerate(leaders):
         particle.set_leader(i, leader_paths[i])
 
-x =np.linspace(0, 20, Variables.n_time_steps+1)
+# Kreisbahn:
+# t =np.linspace(0, 20, Variables.n_time_steps+1)
+# x = 3*np.cos(t)
+# y = 3*np.sin(t)
+
+x = np.linspace(0, 30, Variables.n_time_steps+1)
 y = x
 
 x = np.diff(x)
 y = np.diff(y)
-leader_paths = np.array([[x, y], [x, y]])
+leader_paths = np.array([[x, y], [y, x]])
 
 particles = lattice_grid()
 choose_leader(particles, leader_paths)
