@@ -38,6 +38,7 @@ class Simulation:
                     f_ij = self.lennard_jones_pair_force(r_ij, a, b)
                     
                     r = np.linalg.norm(r_ij)
+                    #r = self.check_zero(r)
                     p.update_convinced(r, j)
 
                     f[i, :] += f_ij
@@ -61,6 +62,8 @@ class Simulation:
             # Update alle positionen und geschwindigkeiten aller(!!) Teilchen
             p.x += p.v * Variables.dt * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 * p.f * Variables.dt * Variables.dt / Variables.mass
             p.x = self.periodic_boundarys(p.x)
+            if p.leader:
+                p.update_leader_pos(self.run_index)
             p.v = (p.v * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 / Variables.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
         
         f = self.simple_interaction() + self.leader_force() + self.W() # anstatt np.zeros_like(x) kommt hier die anziehung des leaders hin
@@ -80,6 +83,7 @@ class Simulation:
         return np.array(state)
     
 
+
     # Tools ----------------------------------------
     def minimum_image_vector(self, r_ij):
         r_ij -= np.rint(r_ij / Variables.box[0]) * Variables.box[0]
@@ -92,3 +96,10 @@ class Simulation:
             if x[i] <= 0:
                 x[i] = x[i]+Variables.box[i]
         return x
+    
+    def check_zero(r: float):
+        if 0 <= r and r <=0.01:
+            r = 0.02
+            return r
+        else:
+            return r

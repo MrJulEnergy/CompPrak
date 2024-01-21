@@ -21,7 +21,7 @@ def lattice_grid() -> np.ndarray:
             i+=1
     return particles
 
-def choose_leader(particles: list[Particle]) -> None:
+def choose_leader(particles: list[Particle], leader_paths) -> None:
     """Choose a random leader from a set of particles
 
     Parameters
@@ -31,14 +31,17 @@ def choose_leader(particles: list[Particle]) -> None:
     leaders = np.random.choice(particles, size=Variables.N_leaders)
     leaders = sorted(leaders, key=lambda x: x.idx, reverse=True)
     for i, particle in enumerate(leaders):
-        particle.set_leader(i)
+        particle.set_leader(i, leader_paths[i])
 
-x =np.linspace(0, 5, Variables.n_time_steps)
+x =np.linspace(0, 20, Variables.n_time_steps+1)
 y = x
 
+x = np.diff(x)
+y = np.diff(y)
+leader_paths = np.array([[x, y], [x, y]])
 
 particles = lattice_grid()
-choose_leader(particles)
+choose_leader(particles, leader_paths)
 
 sim = Simulation(particles)
 state = sim.run()

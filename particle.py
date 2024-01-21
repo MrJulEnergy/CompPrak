@@ -14,7 +14,7 @@ class Particle:
         self.idx = idx
         self.color = color
 
-    def set_leader(self, i):
+    def set_leader(self, i, leader_path):
         #TODO bei mehr leadern überlegen
         self.leader = True
         if i == 0:
@@ -22,7 +22,13 @@ class Particle:
         else:
             self.color = (255, 0, 0)
         self.radius = Variables.particle_leader_radius
+        self.leader_path = leader_path
         #TODO wähle farbe aus farben-set
+    
+    def update_leader_pos(self, idx):
+        # shift the leader position into the right direction to follow a path
+        self.x += self.leader_path[:, idx]
+        
 
     def update_convinced(self, r: float, i: int):
         change_rate = (1/r - self.convinced[i] * Variables.loss_factor) 
@@ -48,3 +54,4 @@ class Particle:
     #             super().__setattr__("f", value)
     #     else:
     #         super().__setattr__(name, value)
+    
