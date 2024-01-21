@@ -14,10 +14,9 @@ class Particle:
         self.idx = idx
         self.color = color
 
-    def set_leader(self, i, leader_path: np.array):
+    def set_leader(self, i):
         #TODO bei mehr leadern überlegen
         self.leader = True
-        self.leader_path = leader_path # leader_path[i, j] mit i=time, j=position (x,y)
         if i == 0:
             self.color = (0, 0, 255)
         else:

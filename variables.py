@@ -24,7 +24,7 @@ class Variables:
 
     # lattice grid
     DENSITY = 0.3 # Anfangsdichte
-    N_PER_SIDE = 7
+    N_PER_SIDE = 5
     N = N_PER_SIDE**2
     VOLUME = N / DENSITY
     box = np.ones(2) * VOLUME**(1. / 2) # für periodic boundarys sollte das hier als box verwendet werden
@@ -38,6 +38,6 @@ class Variables:
     leader_position = 1.2 # potentialtopf position (normaler abstand zwischen leader und follower)
 
     # Simulation
-    dumpfile = "checkpoints/N_49.save"
+    dumpfile = "checkpoints/dump.save"
 
 
