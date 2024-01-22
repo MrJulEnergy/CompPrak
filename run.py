@@ -34,16 +34,18 @@ def choose_leader(particles: list[Particle], leader_paths) -> None:
         particle.set_leader(i, leader_paths[i])
 
 # Kreisbahn:
-# t =np.linspace(0, 20, Variables.n_time_steps+1)
-# x = 3*np.cos(t)
-# y = 3*np.sin(t)
+t = np.linspace(0, 20, Variables.n_time_steps+1)
+x_1 = 3*np.cos(t)
+y_1 = 3*np.sin(t)
 
-x = np.linspace(0, 30, Variables.n_time_steps+1)
-y = x
+x_2 = np.linspace(0, 30, Variables.n_time_steps+1)
+y_2 = x_2
 
-x = np.diff(x)
-y = np.diff(y)
-leader_paths = np.array([[x, y], [y, x]])
+x_1 = np.diff(x_1)
+y_1 = np.diff(y_1)
+x_2 = np.diff(x_2)
+y_2 = np.diff(y_2)
+leader_paths = np.array([[x_2, y_2], [x_2, y_2], [x_2, y_2], [x_2, y_2]])
 
 particles = lattice_grid()
 choose_leader(particles, leader_paths)
@@ -53,5 +55,3 @@ state = sim.run()
 
 with open(Variables.dumpfile, 'wb') as fp:
         pickle.dump(state, fp)
-
-

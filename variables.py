@@ -23,8 +23,8 @@ class Variables:
     Temp = 0.5 # wie sehr zapplen die leute im raum
 
     # lattice grid
-    DENSITY = 0.15 # Anfangsdichte
-    N_PER_SIDE = 6
+    DENSITY = 0.1 # Anfangsdichte
+    N_PER_SIDE = 5
     N = N_PER_SIDE**2
     VOLUME = N / DENSITY
     box = np.ones(2) * VOLUME**(1. / 2) # für periodic boundarys sollte das hier als box verwendet werden
@@ -34,10 +34,8 @@ class Variables:
     loss_factor = 0.5 # verlust an convincedheit pro sekunde
     
     # leader force
-    leader_attraction = 40 # potentialtopf tiefe (anziehungsstärke zwischen leader und follower)
+    leader_attraction = 100 # potentialtopf tiefe (anziehungsstärke zwischen leader und follower)
     leader_position = 1.2 # potentialtopf position (normaler abstand zwischen leader und follower)
 
     # Simulation
     dumpfile = "checkpoints/dump.save"
-
-

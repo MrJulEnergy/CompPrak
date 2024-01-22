@@ -8,6 +8,7 @@ class Simulation:
     def __init__(self, particles):
         self.particles = particles
         self.leader_list = [i for i in range(Variables.N) if self.particles[i].leader]
+        self.leaders = [particles[i] for i in self.leader_list]
 
     # Alle Kräfte ----------------------------------------
     def lennard_jones_pair_force(self, r_ij: np.array, a: float, b: float):
@@ -40,7 +41,7 @@ class Simulation:
                     
                     r = np.linalg.norm(r_ij)
                     r = self.check_zero(r)
-                    p.update_convinced(r, j)
+                    p.update_convinced(r, j, self.leaders)
 
                     f[i, :] += f_ij
                     f[j, :] = np.zeros(shape=2)
