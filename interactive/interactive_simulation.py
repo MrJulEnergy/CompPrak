@@ -61,12 +61,13 @@ class Simulation:
         return f
     
     def mouse_force(self, pos: np.array):
-        for leader in self.leaders:
-            r_ij = pos-leader.x
+        for particle in self.particles:
+            r_ij = pos-particle.x
+            r_ij = self.minimum_image_vector(r_ij)
             r = np.linalg.norm(r_ij)
             r = self.check_zero(r)
-            fac = 100 / np.sqrt(r)
-            leader.f = fac * r_ij / r
+            fac = 200 / np.sqrt(r)
+            particle.f = fac * r_ij / r
 
     # Integrator  ----------------------------------------
     def step_vv_langevin(self) -> None:
@@ -80,7 +81,6 @@ class Simulation:
             p.v = (p.v * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 / Variables.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
         
         f = self.simple_interaction() + self.leader_force() + self.W() # anstatt np.zeros_like(x) kommt hier die anziehung des leaders hin
-        
         for i, p in enumerate(self.particles):
             p.f = f[i, :]
             p.v = p.v + (0.5 / Variables.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
@@ -109,6 +109,8 @@ class Simulation:
                 x[i] = x[i]+Variables.box[i]
         return x
     
+
+    # Stabilität des Systems kommt von hier:----------
     def check_zero(self, r: float):
         if 0 <= r and r <=0.1:
             r = 0.1
