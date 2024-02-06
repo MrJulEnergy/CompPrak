@@ -81,10 +81,12 @@ class Simulation:
             p.v = (p.v * (1 - Variables.dt * Variables.gamma * 0.5) + 0.5 / Variables.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
         
         f = self.simple_interaction() + self.leader_force() + self.W() # anstatt np.zeros_like(x) kommt hier die anziehung des leaders hin
+        f = self.force_cap(f)
         for i, p in enumerate(self.particles):
             p.f = f[i, :]
             p.v = p.v + (0.5 / Variables.mass * p.f * Variables.dt) / (1 + 0.5 * Variables.dt * Variables.gamma)
-        self.cap_velocities()
+        
+        self.velocity_cap()
         
     # Alles wird hier ausgeführt ----------------------------------------
     def run(self):
@@ -119,7 +121,14 @@ class Simulation:
         else:
             return r
         
-    def cap_velocities(self):
+    def force_cap(self, f):
+        cap = 1
+        return np.where(f>=cap, cap, f)
+    
+    def velocity_cap(self):
+        cap = 1
         for p in self.particles:
-            if np.linalg.norm(p.v) >= 30:
-                p.v = np.random.random(size=2)-.5
+            if p.v[0] >= cap:
+                p.v[0] = cap
+            if p.v[1] >= cap:
+                p.v[1] = cap

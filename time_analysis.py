@@ -31,7 +31,7 @@ log_t = np.log(t)
 log_N = np.log(N)
 p0 = [2, -1]
 popt, pcov = curve_fit(lin_fit, log_N, log_t, p0)
-print(popt)
+print(popt, np.sqrt(np.diag(pcov)))
 fit_log_N = np.linspace(min(log_N), max(log_N))
 fit_log_t = lin_fit(fit_log_N, *popt)
 

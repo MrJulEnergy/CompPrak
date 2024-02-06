@@ -4,7 +4,7 @@ import numpy as np
 @dataclass
 class Variables:
     # Animation
-    fps = 100 # Bilder pro Sekunde in der Animation
+    fps = 1000 # Bilder pro Sekunde in der Animation
     T = 20 # Zeit der Animation
     dt = 1/fps # time step 
     n_time_steps = int(T*fps)
@@ -23,7 +23,7 @@ class Variables:
     Temp = 0.5 # wie sehr zapplen die leute im raum
 
     # lattice grid
-    DENSITY = 0.1 # Anfangsdichte
+    DENSITY = 0.3 # Anfangsdichte
     N_PER_SIDE = 5
 
     @classmethod
@@ -40,11 +40,11 @@ class Variables:
     
 
     # Particles
-    N_leaders = 2 # anzahl an leader (aktuell nur 2 möglich solange die farben manuell gewählt werden.)
+    N_leaders =0 # anzahl an leader (aktuell nur 2 möglich solange die farben manuell gewählt werden.)
     loss_factor = 0.5 # verlust an convincedheit pro sekunde
     
     # leader force
-    leader_attraction = 100 # potentialtopf tiefe (anziehungsstärke zwischen leader und follower)
+    leader_attraction = 3 # potentialtopf tiefe (anziehungsstärke zwischen leader und follower)
     leader_position = 1.2 # potentialtopf position (normaler abstand zwischen leader und follower)
 
     # Simulation

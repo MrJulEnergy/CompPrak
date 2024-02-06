@@ -8,6 +8,7 @@ class Simulation:
     def __init__(self, particles):
         self.particles = particles
         self.leader_list = [i for i in range(Variables.N) if self.particles[i].leader]
+        print(len(self.leader_list))
         self.leaders = [particles[i] for i in self.leader_list]
 
     # Alle Kräfte ----------------------------------------

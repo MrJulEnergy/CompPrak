@@ -28,25 +28,14 @@ def choose_leader(particles: list[Particle], leader_paths) -> None:
     ----------
     particles : list[Particle]
     """
-    leaders = np.random.choice(particles, size=Variables.N_leaders)
+    leaders = np.random.choice(particles, size=Variables.N_leaders, replace=False)
     leaders = sorted(leaders, key=lambda x: x.idx, reverse=True)
-    for i, particle in enumerate(leaders):
-        particle.set_leader(i, leader_paths[i])
+    for k, particle in enumerate(leaders):
+        particle.set_leader(k, leader_paths[k])
 
 # Kreisbahn:
-t = np.linspace(0, 20, Variables.n_time_steps+1)
-x_1 = 3*np.cos(t)
-y_1 = 3*np.sin(t)
 
-x_2 = np.linspace(0, 30, Variables.n_time_steps+1)
-y_2 = x_2
-
-x_1 = np.diff(x_1)
-y_1 = np.diff(y_1)
-x_2 = np.diff(x_2)
-y_2 = np.diff(y_2)
-leader_paths = np.array([[x_2, y_2], [x_2, y_2], [x_2, y_2], [x_2, y_2]])
-
+leader_paths = np.zeros(shape=(Variables.N_leaders, 2, Variables.n_time_steps))
 particles = lattice_grid()
 choose_leader(particles, leader_paths)
 
