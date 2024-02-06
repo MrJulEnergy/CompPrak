@@ -4,8 +4,8 @@ import numpy as np
 @dataclass
 class Variables:
     # Animation
-    fps = 100 # Bilder pro Sekunde in der Animation
-    T = 50 # Zeit der Animation
+    fps = 1500 # Bilder pro Sekunde in der Animation
+    T = 100 # Zeit der Animation
     dt = 1/fps # time step 
     n_time_steps = int(T*fps)
 
@@ -23,7 +23,7 @@ class Variables:
     Temp = 1 # wie sehr zapplen die leute im raum
 
     # lattice grid
-    DENSITY = 0.3 # Anfangsdichte
+    DENSITY = 0.35 # Anfangsdichte
     N_PER_SIDE = 5
 
     @classmethod

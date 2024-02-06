@@ -5,12 +5,12 @@ import numpy as np
 from variables import Variables
 from particle import Particle
 
-font = {'family' : 'normal',
-        'weight' : 'bold',
-        'size'   : 15}
+# font = {'family' : 'normal',
+#         'weight' : 'bold',
+#         'size'   : 15}
 
-matplotlib.rc('font', **font)
-plt.rcParams['text.usetex'] = True
+# matplotlib.rc('font', **font)
+# plt.rcParams['text.usetex'] = True
 
 with open("checkpoints/dump.save", 'rb') as fp:
     data = pickle.load(fp)
